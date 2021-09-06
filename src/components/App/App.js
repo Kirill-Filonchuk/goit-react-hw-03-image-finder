@@ -1,77 +1,58 @@
 import '../App/App.css';
 import React, { Component } from 'react';
-import shortid from 'shortid';
+// import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import { injectStyle } from 'react-toastify/dist/inject-style';
+import Searchbar from '../Searchbar';
+import ImageGallery from '../ImageGallery';
+// import Button from '../Button';
+// import shortid from 'shortid';
 
-import initialContact from '../../data/start-data.json';
-import ContactForm from '../ContactForm';
-import Filter from '../Filter';
-import ContactList from '../ContactList';
+////////////////
+// ОТСЛЕЖИВАТЬ
+// id - уникальный идентификатор
+// webformatURL - ссылка на маленькое изображение для списка карточек
+// largeImageURL
+///////////
 
+//////////////
+injectStyle();
 class App extends Component {
   state = {
-    contacts: initialContact,
-    filter: '',
+    // status: 'idle',
+    // error: null,
+
+    searchRequest: '',
+    // Запрос с Сабмита формы и далее проброс-ПРОПОМ в Searchbar
   };
+  //look for the ansver from API if 0 - then 'ничегоне нашли' кнопка ЛОАД-МОРЕ НЕ рендерить. Если пустая строка, то Рандомн картинки
+  componentDidMount() {
+    // this.setState({ isLoaded: true });
+  }
 
-  formSubmitHandler = ({ name, number }) => {
-    const cont = {
-      id: shortid.generate(),
-      name,
-      number,
-    };
-
-    const checkName = cont.name.toLowerCase();
-    if (this.state.contacts.some(item => item.name.toLowerCase() === `${checkName}`)) {
-      alert(`${cont.name} is already in contacts`);
-      return;
-    }
-    this.setState(prevState => {
-      const contacts = [...prevState.contacts, cont];
-      return {
-        contacts,
-      };
-    });
-    // console.log('Arr', this.state.contacts);
-  };
-
-  changeFilter = e => {
-    // console.log(e.currentTarget.value);
-    this.setState({
-      filter: e.currentTarget.value,
-    });
-  };
-
-  onDeleteCont = id => {
-    // console.log(id);
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(con => con.id !== id),
-    }));
-  };
-  // filter создаёт НОВЫЙ массив, в который войдут только те элементы arr, для которых вызов callback(item, i, arr) возвратит true.
-
-  visibleContact = () => {
-    const normalizedFilter = this.state.filter.toLowerCase();
-    const visibleContact = this.state.contacts.filter(con =>
-      con.name.toLowerCase().includes(normalizedFilter),
-    );
-    return visibleContact;
+  onSubmit = searchRequest => {
+    console.log('App', searchRequest);
+    this.setState({ searchRequest });
+    console.log('this.state', this.state.searchRequest);
   };
 
   render() {
-    // const normalizedFilter = this.state.filter.toLowerCase();
-    // const visibleContact = this.state.contacts.filter(con =>
-    //   con.name.toLowerCase().includes(normalizedFilter),
-    // );
     return (
       <div className="container">
-        <h1>Phonebook</h1>
+        {/* {this.state.searchRequest && <h1>{this.state.searchRequest}</h1>}
+        <ul>
+          {this.state.searchRequest &&
+            this.state.searchRequesty.map((pix, index) => <li key={index}>{pix.user}</li>)}
+        </ul> */}
+        <Searchbar onSubmit={this.onSubmit} />
+        <ImageGallery searchRequest={this.state.searchRequest} />
+        {/* <Searchbar onSubmit={onSubmit} /> // Форма с локальным СТэйтом (где храним - пока набираем ИНПУТ)
 
-        <ContactForm formSubmitHandler={this.formSubmitHandler} />
+        <ImageGallery /> // наверное здесь и будет и Рендеринг и Запрос
 
-        <h2>Contacts</h2>
-        <Filter value={this.state.filter} onChange={this.changeFilter} />
-
-        <ContactList visibleContact={this.visibleContact()} onDeleteCont={this.onDeleteCont} />
+        <Button /> Где рендерить?*/}
+        {/* <Button /> */}
+        <ToastContainer autoClose={3000} />
       </div>
     );
   }
