@@ -43,16 +43,9 @@ export default class ImageGallery extends Component {
         )
         .then(res => {
           let myData = res.data.hits;
-          if(this.state.pixData){myData.push(...this.state.pixData)}
-          if(myData.length<0){
-            this.setState((state) => (
-                state = {
-                pixData: null,
-                    // page: 1
-              }));
-              return
-          }
-        //   this.state.pixData? myData.push(this.state.pixData): myData;
+        //   if(this.state.pixData){this.state.pixData.push(...myData)}
+        // if(this.state.pixData){myData.unshift(...this.state.pixData)}
+        if(this.state.pixData){myData=[...this.state.pixData, ...myData]}
           const lenGth = myData.length;
           console.log('data', myData);
           console.log('lenGth', lenGth);
