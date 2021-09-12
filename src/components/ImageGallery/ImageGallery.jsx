@@ -9,10 +9,19 @@ export default function ImageGallery({ searchRequest }){
   console.log('ImgGal', { searchRequest });
     return (
           <ul className={s.ImageGallery}>
-            {searchRequest.map(ImageCart => (
-              <ImageGalleryItem {...ImageCart} key={shortid.generate()} />
+            {searchRequest.map(ImageCard => (
+              <ImageGalleryItem {...ImageCard} key={shortid.generate()} />
             ))}
           </ul>
     
     );
   }
+
+
+  
+////////////////
+// ОТСЛЕЖИВАТЬ
+// id - уникальный идентификатор
+// webformatURL - ссылка на маленькое изображение для списка карточек
+// largeImageURL
+///////////

@@ -75,7 +75,7 @@ class App extends Component {
         {error && <h1>Ошибка!!!</h1>}
         {isTherePix && <h1>Картинок по Вашему запросу не найдено!</h1>}
         {isLoaded && (
-          <div>
+          <div className={'Spiner'}>
             <Loader
               type="Circles"
               color="#00BFFF"
