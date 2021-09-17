@@ -4,13 +4,13 @@ import shortid from 'shortid';
 import s from './ImageGallery.module.css';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 
-export default function ImageGallery({ searchRequest }){
-
-  console.log('ImgGal', { searchRequest });
+export default function ImageGallery({ searchRequest, imgPastToModal }){
+// console.log('imgPastToModal', imgPastToModal);
+  // console.log('ImgGal', { searchRequest });
     return (
           <ul className={s.ImageGallery}>
             {searchRequest.map(ImageCard => (
-              <ImageGalleryItem {...ImageCard} key={shortid.generate()} />
+              <ImageGalleryItem {...ImageCard} imgPastToModal={imgPastToModal} key={shortid.generate()} />
             ))}
           </ul>
     
@@ -19,7 +19,7 @@ export default function ImageGallery({ searchRequest }){
 
 
   
-////////////////
+////////////////modal={this.imgPastToModal} imgPastToModal={this.imgPastToModal}
 // ОТСЛЕЖИВАТЬ
 // id - уникальный идентификатор
 // webformatURL - ссылка на маленькое изображение для списка карточек

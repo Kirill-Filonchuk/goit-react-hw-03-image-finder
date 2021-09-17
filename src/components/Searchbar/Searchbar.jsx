@@ -7,7 +7,7 @@ export default class Searchbar extends Component {
     pixabeyToSearch: '',
   };
   handlSearchChange = event => {
-    console.log('handlSearchChange', event.currentTarget.value);
+    // console.log('handlSearchChange', event.currentTarget.value);
     this.setState({
       pixabeyToSearch: event.currentTarget.value.toLowerCase(),
     });
@@ -16,7 +16,7 @@ export default class Searchbar extends Component {
   handleSabmit = event => {
     event.preventDefault();
     
-    console.log('onSubmit', this.state.pixabeyToSearch);
+    // console.log('onSubmit', this.state.pixabeyToSearch);
       if (this.state.pixabeyToSearch.trim() === '') {
         toast.error('Введите Ваш запрос!', {
           position: toast.POSITION.TOP_LEFT,
@@ -34,7 +34,7 @@ export default class Searchbar extends Component {
           <button
             type="submit"
             className={s.SearchFormButton}
-            onClick={console.log('BTN - search')}
+            // onClick={console.log('BTN - search')}
           >
             <span className={s.SearchFormButtonLabel}>Search</span>
           </button>

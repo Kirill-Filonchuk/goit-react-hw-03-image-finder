@@ -9,6 +9,7 @@ import pixApi from '../../utils/pixApi';
 import Searchbar from '../Searchbar';
 import ImageGallery from '../ImageGallery';
 import Button from '../Button';
+import Modal from '../Modal';
 
 //////////////
 injectStyle();
@@ -22,6 +23,8 @@ class App extends Component {
     isLoaded: false,
     error: null,
     isTherePix: false,
+    showModal: false,
+    imgInModal: '',
   };
   //look for the ansver from API if 0 - then 'ничего не нашли' кнопка ЛОАД-МОРЕ НЕ рендерить. Если пустая строка, то Рандомн картинки
   componentDidMount() {
@@ -47,7 +50,7 @@ class App extends Component {
           pixData: [...prevState.pixData, ...pix],
           page: prevState.page + 1,
         }));
-        console.log(pix.length);
+        // console.log(pix.length);
         pix.length < 1 ? this.setState({ isTherePix: true }) : this.setState({ isTherePix: false });
       })
       .catch(error => this.setState({ error }))
@@ -62,16 +65,46 @@ class App extends Component {
       pixData: [],
       error: null,
     });
-    console.log('this.state -', this.state.searchRequest);
+    // console.log('this.state -', this.state.searchRequest);
+  };
+
+  togleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
+  imgPastToModal = img => {
+    // const { largeImageURL, tags } = this.state.imgInModal;
+    // console.log('IMG in App', img);
+    // console.log('stateIMG', largeImageURL);
+    // console.log('stateTAGS', tags);
+    this.setState({
+      imgInModal: img,
+    });
+    this.togleModal();
   };
 
   render() {
     const { pixData, isLoaded, isTherePix, error } = this.state;
+    const { largeImageURL, tags } = this.state.imgInModal;
     const shouldRenderLoadMoreButton = pixData.length > 0 && pixData.length > 11 && !isLoaded;
     return (
       <div className="container">
+        {this.state.showModal && (
+          <Modal onClose={this.togleModal} imgPastToModal={this.imgPastToModal}>
+            {this.state.imgInModal && <img src={largeImageURL} alt={tags} />}
+            <p>{tags}</p>
+            <button type="button" onClick={this.togleModal}>
+              Close
+            </button>
+          </Modal>
+        )}
+        {/* <button type="button" onClick={this.togleModal}>
+          hello
+        </button> */}
         <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery searchRequest={pixData} />
+        <ImageGallery searchRequest={pixData} imgPastToModal={this.imgPastToModal} />
         {error && <h1>Ошибка!!!</h1>}
         {isTherePix && <h1>Картинок по Вашему запросу не найдено!</h1>}
         {isLoaded && (
