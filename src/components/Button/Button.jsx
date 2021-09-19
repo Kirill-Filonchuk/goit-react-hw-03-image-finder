@@ -1,11 +1,8 @@
 // import { Component } from "react";
 import s from './Button.module.css';
 
-export default function Button({ LoadMore }) {
-  window.scrollTo({
-    top: document.documentElement.scrollHeight,
-    behavior: 'smooth',
-  });
+export default function Button({ LoadMore, scroll }) {
+   scroll()
   return (
     <button type="button" name="page" onClick={LoadMore} className={s.Button}>
       <span className={s.styleBtn}>Load more</span>{' '}

@@ -7,7 +7,7 @@ import Loader from 'react-loader-spinner';
 
 import pixApi from '../../utils/pixApi';
 import Searchbar from '../Searchbar';
-import ImageGallery from '../ImageGallery';
+import ImageGallery from '../Gallery/ImageGallery';
 import Button from '../Button';
 import Modal from '../Modal';
 
@@ -85,10 +85,19 @@ class App extends Component {
     this.togleModal();
   };
 
+  scroll = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+    // console.log(this);
+  };
+
   render() {
     const { pixData, isLoaded, isTherePix, error } = this.state;
     const { largeImageURL, tags } = this.state.imgInModal;
     const shouldRenderLoadMoreButton = pixData.length > 0 && pixData.length > 11 && !isLoaded;
+
     return (
       <div className="container">
         {this.state.showModal && (
@@ -118,7 +127,7 @@ class App extends Component {
             />
           </div>
         )}
-        {shouldRenderLoadMoreButton && <Button LoadMore={this.fetchPixData} />}
+        {shouldRenderLoadMoreButton && <Button LoadMore={this.fetchPixData} scroll={this.scroll} />}
         <ToastContainer autoClose={3000} />
       </div>
     );

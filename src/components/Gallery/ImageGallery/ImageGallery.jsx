@@ -2,7 +2,7 @@ import React from 'react';
 
 import shortid from 'shortid';
 import s from './ImageGallery.module.css';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
+import ImageGalleryItem from '../ImageGalleryItem';
 
 export default function ImageGallery({ searchRequest, imgPastToModal }){
 // console.log('imgPastToModal', imgPastToModal);
